@@ -13,31 +13,47 @@ class App extends Component {
 
   	this.state ={
   		quote: '"Your quote is loading"',
-  		author: "Random Quote Machine"
-  	}
+  		author: "Random Quote Machine" 
+  	};
+
   }
 
+  //Define functions****************************************
+
+  //End functions*******************************************
+
   componentDidMount() {
+  	fetch('https://talaikis.com/api/quotes')
+      .then(response => response.json())
+      .then(data => this.setState({ 
+      	quote: data[0].quote,
+      	author: data[0].author 
+       }));
+
+      console.log(this.state);
   	//Start API call *****************************************************
-const REQUEST = new XMLHttpRequest();
+/* const REQUEST = new XMLHttpRequest();
 let count = 0;
 
 REQUEST.open('GET', 'https://talaikis.com/api/quotes', true);
 
 REQUEST.onload = function(){
 let quoteCache = JSON.parse(this.response);
+this.setState({
+	data: quoteCache
+})
 
 if(REQUEST.status >= 200 && REQUEST.status <400) {
 
-	quoteCache.forEach(obj => console.log(obj.author));
+	console.log(quoteCache[0].author)
+
 	} else {
 		console.log('error');
 	}
 } 
 //End API call *********************************************************
-
 //Send API request ******************
-REQUEST.send();
+REQUEST.send(); */
 
   }
 
