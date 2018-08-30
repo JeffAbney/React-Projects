@@ -1,0 +1,67 @@
+body{
+  display: flex;
+  flex-direction: column;
+  background: darkblue;
+  align-items: center;
+}
+
+#root{
+  display: flex;
+  flex-direction: column;
+  background: darkblue;
+  align-items: center;
+  width: 100%
+}
+
+.grid-container {
+    min-height: 300px;
+    width: 90%;
+    margin-top: 70px;
+    background: LightGray;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 4fr 1fr 1fr;
+    grid-gap: 10px;
+    grid-template-areas: 
+      "quote quote quote"
+      ". author author"
+      "btn . tweet";
+}
+
+.text-container{
+  grid-area: quote;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: red;
+  
+}
+
+.author-container{
+  grid-area: author;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+}
+
+.twitter-link-container{
+  grid-area: tweet;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: green;
+}
+
+.new-quote-btn{
+  grid-area: btn;
+  background: yellow;
+}
+
+@media screen and (min-width: 768px){
+
+  .grid-container{
+    margin-top: 125px;
+    max-width: 650px;
+  }
+}
