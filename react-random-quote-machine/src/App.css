@@ -1,14 +1,15 @@
-body{
-  display: flex;
-  flex-direction: column;
-  background: darkblue;
-  align-items: center;
+ :root {
+    --black-ish: #1c110a;
+    --white-ish: #E4D6A7;
+    --yellow-ish: #E9B44C;
+    --red-ish: #9B2915;
+    --blue-ish: #50A2A7;
 }
 
 #root{
   display: flex;
   flex-direction: column;
-  background: darkblue;
+  background: var(--black-ish);
   align-items: center;
   width: 100%
 }
@@ -17,7 +18,8 @@ body{
     min-height: 300px;
     width: 90%;
     margin-top: 70px;
-    background: LightGray;
+    border: 2px solid var(--white-ish);
+    border-radius: 0 5% 0 5%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 4fr 1fr 1fr;
@@ -33,7 +35,7 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
-  background: red;
+  color: var(--white-ish);
   
 }
 
@@ -42,7 +44,7 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
-  background: white;
+  color: var(--white-ish);
 }
 
 .twitter-link-container{
