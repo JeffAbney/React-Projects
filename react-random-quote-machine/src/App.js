@@ -56,8 +56,8 @@ class App extends React.Component {
 				<div className={"auto-text color-"+this.state.count} id="author">{this.state.author}</div>
 			</div>
 			<div className="twitter-link-container">
-				<div className="twitter-icon" id="tweet-quote">
-					<a className="twitter-share-button" href={tweetUrl+this.state.quote+" -"+this.state.author} target ="_blank"><i class={"fab fa-twitter color-"+this.state.count}></i></a> 
+				<div className="twitter-icon">
+					<a className="twitter-share-button" id="tweet-quote" href={tweetUrl+this.state.quote+" -"+this.state.author} target ="_blank"><i class={"fab fa-twitter color-"+this.state.count}></i></a> 
 				</div>
 			</div>
 			<button className={"new-quote-btn color-"+this.state.count }id="new-quote" onClick = {this.handleClick}>New Quote</button>
