@@ -4,6 +4,7 @@ import './App.css';
 
 const APIURL = 'https://talaikis.com/api/quotes/random';
 const tweetUrl = "https://twitter.com/intent/tweet?text=";
+const randomNumber = Math.floor((Math.random() * 5) + 1);
 //End importing *********************************************
 
 
@@ -13,8 +14,10 @@ class App extends React.Component {
   constructor(props) {
   	super(props);
 
+
+
   	this.state ={
-  		count: Math.floor((Math.random() * 5) + 1),
+  		count: randomNumber,
   		quote: '"Your quote is loading"',
   		author: "Random Quote Machine" 
   	};
@@ -26,7 +29,7 @@ class App extends React.Component {
 	fetch(APIURL)
       	.then(response => response.json())
       	.then(data => this.setState({ 
-      		count: Math.floor((Math.random() * 5) + 1),
+      		count: randomNumber,
       		quote: data.quote,
       		author: data.author 
       	 }));
@@ -37,7 +40,7 @@ class App extends React.Component {
   		fetch(APIURL)
       	.then(response => response.json())
       	.then(data => this.setState({ 
-      		count: Math.floor((Math.random() * 5) + 1),
+      		count: randomNumber,
       		quote: data.quote,
       		author: data.author 
       	 }));
