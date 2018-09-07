@@ -18,16 +18,40 @@ class App extends React.Component {
 
   	this.state ={
   		colorCount: randomNumber(),
-  		quoteCount: 0,
+  		quoteCount: "",
   		data: [],
   		quote: '"Your quote is loading"',
-  		author: "Random Quote Machine" 
+  		author: "Random Quote Machine",
+  		btnDisabled: true, 
   	};
   	this.handleClick = this.handleClick.bind(this);
+  	this.APIFetch = this.APIFetch.bind(this);
+  	this.reset = this.reset.bind(this);
   }
 
+  APIFetch() {
+  		fetch(APIURL)
+      	.then(response => response.json())
+      	.then(data => this.setState({
+      		colorCount: randomNumber(),
+      		quoteCount: 0,
+      		cache: data,
+      		quote: data[0].quote,
+      		author: data[0].author,
+      		btnDisabled: false,
+      	}))
+  	}
+
+  reset() {
+  	this.setState({
+  		btnDisabled: true,
+  	})
+  	this.APIFetch();
+  }
 
   handleClick(){
+  		this.state.quoteCount === 100 ? this.reset() 
+  		:
       	this.setState({
       		colorCount: Math.floor((Math.random() * 5) + 1),
       		quoteCount: this.state.quoteCount+1,
@@ -40,19 +64,8 @@ class App extends React.Component {
   //Start API call****************************************
 
   componentDidMount() {
-  		document.getElementById("new-quote").disabled = true;
 
-  		fetch(APIURL)
-      	.then(response => response.json())
-      	.then(data => this.setState({
-      		colorCount: randomNumber(),
-      		cache: data,
-      		quote: data[0].quote,
-      		author: data[0].author,
-      	}))
-      	.then(document.getElementById("new-quote").disabled = false);
-
-
+  		this.APIFetch();
   }
     //End API call*******************************************
 
@@ -72,7 +85,7 @@ class App extends React.Component {
 					<a className="twitter-share-button" id="tweet-quote" href={tweetUrl+this.state.quote+" -"+this.state.author} target ="_blank"><i class={"fab fa-twitter color-"+this.state.colorCount}></i></a> 
 				</div>
 			</div>
-			<button className={"new-quote-btn color-"+this.state.colorCount} id="new-quote" onClick = {this.handleClick}>New Quote</button>
+			<button disabled={this.state.btnDisabled} className={"new-quote-btn color-"+this.state.colorCount} id="new-quote" onClick = {this.handleClick}>New Quote</button>
 		</div>
 		<div className="credit">
 			<p className={"color-"+this.state.colorCount}>Designed and Developed by <a href="mailto: jeffmabney@gmail.com">Jeff Abney</a></p>
