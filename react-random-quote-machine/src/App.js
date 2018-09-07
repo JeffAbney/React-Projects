@@ -2,22 +2,24 @@
 import React, { Component } from 'react';
 import './App.css';
 
-const APIURL = 'https://talaikis.com/api/quotes/random';
+const APIURL = 'https://talaikis.com/api/quotes';
 const tweetUrl = "https://twitter.com/intent/tweet?text=";
-const randomNumber = Math.floor((Math.random() * 5) + 1);
+let randomNumber = () => Math.floor((Math.random() * 5) + 1);
+const quotes = [];
 //End importing *********************************************
 
 
 //Start App Component *************************************************
 
 class App extends React.Component {
+
   constructor(props) {
   	super(props);
 
-
-
   	this.state ={
-  		count: randomNumber,
+  		colorCount: randomNumber(),
+  		quoteCount: 0,
+  		data: [],
   		quote: '"Your quote is loading"',
   		author: "Random Quote Machine" 
   	};
@@ -26,24 +28,31 @@ class App extends React.Component {
 
 
   handleClick(){
-	fetch(APIURL)
-      	.then(response => response.json())
-      	.then(data => this.setState({ 
-      		count: randomNumber,
-      		quote: data.quote,
-      		author: data.author 
-      	 }));
+      	this.setState({
+      		colorCount: Math.floor((Math.random() * 5) + 1),
+      		quoteCount: this.state.quoteCount+1,
+      		quote: this.state.cache[this.state.quoteCount+1].quote,
+      		author: this.state.cache[this.state.quoteCount+1].author, 
+      	 });
   }
+
+
   //Start API call****************************************
 
   componentDidMount() {
+  		document.getElementById("new-quote").disabled = true;
+
   		fetch(APIURL)
       	.then(response => response.json())
-      	.then(data => this.setState({ 
-      		count: randomNumber,
-      		quote: data.quote,
-      		author: data.author 
-      	 }));
+      	.then(data => this.setState({
+      		colorCount: randomNumber(),
+      		cache: data,
+      		quote: data[0].quote,
+      		author: data[0].author,
+      	}))
+      	.then(document.getElementById("new-quote").disabled = false);
+
+
   }
     //End API call*******************************************
 
@@ -51,22 +60,22 @@ class App extends React.Component {
   render() {
     return (	
       <div className="page">	
-		<div className={"grid-container color-"+this.state.count} id="quote-box">
+		<div className={"grid-container color-"+this.state.colorCount} id="quote-box">
 			<div className={"text-container"}>
-				<div className={"quote-text color-"+this.state.count} id ="text">{this.state.quote}</div>
+				<div className={"quote-text color-"+this.state.colorCount} id ="text">{this.state.quote}</div>
 			</div>
 			<div className="author-container">
-				<div className={"auto-text color-"+this.state.count} id="author">{this.state.author}</div>
+				<div className={"auto-text color-"+this.state.colorCount} id="author">{this.state.author}</div>
 			</div>
 			<div className="twitter-link-container">
 				<div className="twitter-icon">
-					<a className="twitter-share-button" id="tweet-quote" href={tweetUrl+this.state.quote+" -"+this.state.author} target ="_blank"><i class={"fab fa-twitter color-"+this.state.count}></i></a> 
+					<a className="twitter-share-button" id="tweet-quote" href={tweetUrl+this.state.quote+" -"+this.state.author} target ="_blank"><i class={"fab fa-twitter color-"+this.state.colorCount}></i></a> 
 				</div>
 			</div>
-			<button className={"new-quote-btn color-"+this.state.count }id="new-quote" onClick = {this.handleClick}>New Quote</button>
+			<button className={"new-quote-btn color-"+this.state.colorCount} id="new-quote" onClick = {this.handleClick}>New Quote</button>
 		</div>
 		<div className="credit">
-			<p className={"color-"+this.state.count}>Designed and Developed by <a href="mailto: jeffmabney@gmail.com">Jeff Abney</a></p>
+			<p className={"color-"+this.state.colorCount}>Designed and Developed by <a href="mailto: jeffmabney@gmail.com">Jeff Abney</a></p>
 		</div>
 	  </div>	
     );
